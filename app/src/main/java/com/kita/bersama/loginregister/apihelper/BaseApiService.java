@@ -23,5 +23,6 @@ public interface BaseApiService {
     Call<ResponseBody> registerRequest(@Field("name") String name,
                                        @Field("email") String email,
                                        @Field("notelp") String notelp,
-                                       @Field("password") String password);
+                                       @Field("password") String password,
+                                       @Field("password_confirmation") String password_confirmation);
 }

@@ -28,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText etNama;
     EditText etEmail;
-    EditText etPassword;
+    EditText etPassword,etConfirm;
     EditText etNotelp;
     Button btnRegister;
     ProgressDialog loading;
@@ -53,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.etEmail);
         etNotelp = (EditText) findViewById(R.id.etNotelp);
         etPassword = (EditText) findViewById(R.id.etPassword);
+        etConfirm = (EditText) findViewById(R.id.etConfirmPassword);
         btnRegister = (Button) findViewById(R.id.btnRegister);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mApiService.registerRequest(etNama.getText().toString(),
                 etEmail.getText().toString(), etNotelp.getText().toString(),
-                etPassword.getText().toString())
+                etPassword.getText().toString(), etConfirm.getText().toString())
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -77,15 +78,17 @@ public class RegisterActivity extends AppCompatActivity {
                             loading.dismiss();
                             try {
                                 JSONObject jsonRESULTS = new JSONObject(response.body().string());
-                                if (jsonRESULTS.getString("error").equals("false")){
-                                    Toast.makeText(mContext, "BERHASIL REGISTRASI", Toast.LENGTH_SHORT).show();
+                                if (!jsonRESULTS.getString("msg").equals("404")){
+                                    String perfect = jsonRESULTS.getString("msg");
+                                    Toast.makeText(mContext, perfect, Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(mContext, LoginActivity.class));
                                 } else {
-                                    String error_message = jsonRESULTS.getString("error_msg");
+                                    String error_message = jsonRESULTS.getString("msg");
                                     Toast.makeText(mContext, error_message, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                Toast.makeText(mContext, "Register Gagal", Toast.LENGTH_SHORT).show();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

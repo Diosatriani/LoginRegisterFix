@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     Button btnRegister;
     ProgressDialog loading;
-
+    String TAG="";
     Context mContext;
     BaseApiService mApiService;
 
@@ -79,21 +79,27 @@ public class LoginActivity extends AppCompatActivity {
                                 loading.dismiss();
                                 try {
                                     JSONObject jsonRESULTS = new JSONObject(response.body().string());
-                                    if (jsonRESULTS.getString("user").equals("201")){
+                                    if (!jsonRESULTS.getString("msg").equals("404")){
                                         // Jika login berhasil maka data nama yang ada di response API
                                         // akan diparsing ke activity selanjutnya.
-                                        Toast.makeText(mContext, "BERHASIL LOGIN", Toast.LENGTH_SHORT).show();
-                                        String nama = jsonRESULTS.getJSONObject("user").getString("name");
+                                        String success =  jsonRESULTS.getString("msg");
+                                        Toast.makeText(mContext, success, Toast.LENGTH_SHORT).show();
+                                        String nama = jsonRESULTS.getJSONObject("user").getString("email");
                                         Intent intent = new Intent(mContext, MainActivity.class);
                                         intent.putExtra("result_nama", nama);
                                         startActivity(intent);
+                                        Log.d("hh", "uuuuuu"+nama );
                                     } else {
                                         // Jika login gagal
-                                        String error_message = jsonRESULTS.getString("response");
+                                        String error_message = jsonRESULTS.getString("404");
                                         Toast.makeText(mContext, error_message, Toast.LENGTH_SHORT).show();
+
+                                        Log.d(TAG, "onResponse: "+error_message);
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
+
+                                    Toast.makeText(mContext, "Login Gagal", Toast.LENGTH_SHORT).show();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }

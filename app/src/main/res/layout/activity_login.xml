@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="#FF5722"
     tools:context="com.kita.bersama.loginregister.LoginActivity">
 
     <LinearLayout
@@ -56,9 +56,9 @@
             android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#FFF"
+            android:textColor="#000"
             android:text="LOG IN"
-            android:background="@color/colorAccent"/>
+            android:background="#0d3ab4"/>
 
         <TextView
             android:layout_marginTop="8dp"
@@ -74,9 +74,9 @@
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#FFF"
+            android:textColor="#000"
             android:text="REGISTER"
-            android:background="@color/colorAccent"/>
+            android:background="#0d3ab4"/>
     </LinearLayout>
 
 </RelativeLayout>
